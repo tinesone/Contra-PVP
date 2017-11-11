@@ -51,8 +51,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\scripts\ctrl.cs" />
+     <Compile Include="Assets\scripts\BulletController.cs" />
      <Compile Include="Assets\scripts\LevelLoader.cs" />
+     <Compile Include="Assets\scripts\PlayerController.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>/home/jetse/Unity/Contra-PVP/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
