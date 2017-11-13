@@ -24,13 +24,11 @@ public class PlayerController : MonoBehaviour {
 		}
 		if(Input.GetKeyDown("space")){
 			shoot();
-			print ("piew piew");
-			print(transform.position.x);
-			print(transform.position.x + gunOffset.x);
 		}
 	}
 
 	void shoot(){
-		Instantiate(bulletPrefab, new Vector3(transform.position.x + gunOffset.x, transform.position.y + gunOffset.y, 0), this.transform.rotation );
+		GameObject bullet = (GameObject)Instantiate(bulletPrefab, new Vector3(transform.position.x + gunOffset.x, transform.position.y + gunOffset.y, 0), Quaternion.identity );
+		bullet.GetComponent<BulletController>().direction = 2;
 	}
 }

@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 1574266104095580, guid: 97256f18f79324944b480e13ac5d46d4, type: 2}
-  direction: 2
+  direction: 0
   speed: 6
 --- !u!212 &212933979788802738
 SpriteRenderer:
