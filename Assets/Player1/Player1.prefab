@@ -62,7 +62,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &61449278605612924
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -100,10 +100,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 6.5
-  jump: 3
   bulletPrefab: {fileID: 1935937670632816, guid: ce4d0dc25538c4e3c9f6edbe7a770dd1,
     type: 2}
   gunOffset: {x: 0.3125009, y: 0.2031236}
+  jump: 20
+  rigid: {fileID: 50274553742374696}
+  anim: {fileID: 0}
 --- !u!212 &212706477507336556
 SpriteRenderer:
   m_ObjectHideFlags: 1

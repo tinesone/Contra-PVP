@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour {
 
 	public Rigidbody2D rigid;
 
+	public Animator anim;
+
 	// Use this for initialization
 	void Start () {}
 
@@ -21,10 +23,12 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKey (KeyCode.A)) {
 			transform.rotation = Quaternion.Euler(0, -180, 0);
 			transform.position += Vector3.left * velocity * Time.deltaTime;
+			anim.SetInteger("moving", 1);
 		}
 		if (Input.GetKey (KeyCode.D)) {
 			transform.rotation = Quaternion.Euler (0, 0, 0);
 			transform.position += Vector3.right * velocity * Time.deltaTime;
+			anim.SetInteger ("moving", 1);
 		}
 		if(Input.GetKeyDown("space")){
 			shoot();
@@ -32,6 +36,8 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKey (KeyCode.W) && jumpEnable == true) {
 			rigid.AddForce (Vector3.up * (jump * 10));
 			jumpEnable = false;
+		} else {
+			anim.SetInteger("moving", 0);
 		}
 			
 	}
