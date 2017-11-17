@@ -53,7 +53,7 @@ Rigidbody2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1574266104095580}
   m_BodyType: 0
-  m_Simulated: 1
+  m_Simulated: 0
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
@@ -118,13 +118,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06715c2dd547d5544bd0e57ef520fdc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jump: 15
   velocity: 6.5
   bulletPrefab: {fileID: 1935937670632816, guid: ce4d0dc25538c4e3c9f6edbe7a770dd1,
     type: 2}
   gunOffset: {x: 0.3125009, y: 0.2031236}
   jump: 40
-  rigid: {fileID: 50274553742374696}
-  anim: {fileID: 95372277307146082}
 --- !u!212 &212706477507336556
 SpriteRenderer:
   m_ObjectHideFlags: 1

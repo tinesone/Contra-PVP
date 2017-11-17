@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-
+	public int jump = 6;
 	public float velocity = 6.5f;
 	public GameObject bulletPrefab;
 	public Vector2 gunOffset;
 
 	public int jump = 6;
-	bool jumpEnable = false;
 	public string direction = "idle";
+	protected bool jumpEnable = false;
+	protected bool grounded;
+	protected Rigidbody2D rigid;
+	protected Animator anim;
+	protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
+	protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D> (16);
 
-	public Rigidbody2D rigid;
+	void OnEnable()
+	{
+		rigid = GetComponent<Rigidbody2D> ();
+		anim = GetComponent<Animator> ();
+	}
 
-	public Animator anim;
-
-
-	void Start () {}
-
+	// Update is called once per frame
 	void Update () {
 		var x = Input.GetAxis("Horizontal") * Time.deltaTime * velocity;
 		var y = Input.GetAxis("Vertical") * Time.deltaTime * velocity;
@@ -51,7 +56,25 @@ public class PlayerController : MonoBehaviour {
 			direction = "down";
 			//Only down is pressed
 		}
-
+		if(Input.GetKeyDown("space")){
+		}
+			shoot();
+		if (Input.GetKey (KeyCode.W) && grounded == true) {
+			rigid.AddForce (Vector3.up * (jump * 10));
+			jumpEnable = false;
+			anim.SetInteger("moving", 0);
+		} else {
+		}
+		grounded = false;
+		int count = rigid.Cast (Vector2.down, hitBuffer, 0);
+		hitBufferList.Clear ();
+		for (int i = 0; i < count; i++) {
+		}
+			hitBufferList.Add (hitBuffer [i]);
+		for (int i = 0; i < hitBufferList.Count; i++) {
+			Debug.Log (hitBufferList [i].distance == 0);
+			if(hitBufferList [i].distance == 0) grounded = true;
+		}
 		print(direction);
 	}
 
