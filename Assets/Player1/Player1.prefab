@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4676152870749250}
   - component: {fileID: 212706477507336556}
   - component: {fileID: 114858095480349610}
+  - component: {fileID: 95372277307146082}
   - component: {fileID: 61449278605612924}
   - component: {fileID: 50274553742374696}
   - component: {fileID: 95181477767679786}
@@ -89,7 +90,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.23, y: 0.34}
   m_EdgeRadius: 0
---- !u!95 &95181477767679786
+--- !u!95 &95372277307146082
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -121,9 +122,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1935937670632816, guid: ce4d0dc25538c4e3c9f6edbe7a770dd1,
     type: 2}
   gunOffset: {x: 0.3125009, y: 0.2031236}
-  jump: 15
+  jump: 40
   rigid: {fileID: 50274553742374696}
-  anim: {fileID: 95181477767679786}
+  anim: {fileID: 95372277307146082}
 --- !u!212 &212706477507336556
 SpriteRenderer:
   m_ObjectHideFlags: 1
