@@ -10,36 +10,49 @@ public class PlayerController : MonoBehaviour {
 
 	public int jump = 6;
 	bool jumpEnable = false;
+	public string direction = "idle";
 
 	public Rigidbody2D rigid;
 
 	public Animator anim;
 
-	// Use this for initialization
+
 	void Start () {}
 
-	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey (KeyCode.A)) {
-			transform.rotation = Quaternion.Euler(0, -180, 0);
-			transform.position += Vector3.left * velocity * Time.deltaTime;
-			anim.SetInteger("moving", 1);
+		var x = Input.GetAxis("Horizontal") * Time.deltaTime * velocity;
+		var y = Input.GetAxis("Vertical") * Time.deltaTime * velocity;
+
+		if (y == 0 & x == 0) {
+			direction = "idle";
+			//No button is pressed
+		} else if (y > 0f & x > 0f) {
+			direction = "leftUp";
+			//Left and up is pressed
+		} else if (y < 0f & x > 0f) {
+			direction = "leftDown";
+			//Left and down is pressed
+		} else if (y > 0f & x < 0f) {
+			direction = "rightUp";
+			//Right and up is pressed
+		} else if (y < 0f & x < 0f) {
+			direction = "rightDown";
+			//Right and down is pressed
+		} else if (y == 0f & x < 0f) {
+			direction = "right";
+			//Only right is pressed
+		} else if (y == 0f & x > 0f) {
+			direction = "left";
+			//Only left is pressed
+		} else if (y > 0f & x == 0f) {
+			direction = "up";
+			//Only up is pressed
+		} else if  (y < 0f & x == 0f){
+			direction = "down";
+			//Only down is pressed
 		}
-		if (Input.GetKey (KeyCode.D)) {
-			transform.rotation = Quaternion.Euler (0, 0, 0);
-			transform.position += Vector3.right * velocity * Time.deltaTime;
-			anim.SetInteger ("moving", 1);
-		}
-		if(Input.GetKeyDown("space")){
-			shoot();
-		}
-		if (Input.GetKey (KeyCode.W) && jumpEnable == true) {
-			rigid.AddForce (Vector3.up * (jump * 10));
-			jumpEnable = false;
-		} else {
-			anim.SetInteger("moving", 0);
-		}
-			
+
+		print(direction);
 	}
 
 	void shoot(){
