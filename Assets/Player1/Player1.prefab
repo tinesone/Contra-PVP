@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 95372277307146082}
   - component: {fileID: 61449278605612924}
   - component: {fileID: 50274553742374696}
-  - component: {fileID: 95181477767679786}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -122,8 +121,8 @@ MonoBehaviour:
   velocity: 6.5
   bulletPrefab: {fileID: 1935937670632816, guid: ce4d0dc25538c4e3c9f6edbe7a770dd1,
     type: 2}
-  gunOffset: {x: 0.3125009, y: 0.2031236}
-  jump: 40
+  gunOffset:
+  - {x: 0.3125009, y: 0.2031236}
 --- !u!212 &212706477507336556
 SpriteRenderer:
   m_ObjectHideFlags: 1

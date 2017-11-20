@@ -6,16 +6,15 @@ public class PlayerController : MonoBehaviour {
 	public int jump = 6;
 	public float velocity = 6.5f;
 	public GameObject bulletPrefab;
-	public Vector2 gunOffset;
+	public List<Vector2> gunOffset = new List<Vector2>(8);
 
-	public int jump = 6;
-	public string direction = "idle";
 	protected bool jumpEnable = false;
 	protected bool grounded;
 	protected Rigidbody2D rigid;
 	protected Animator anim;
 	protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
 	protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D> (16);
+	protected int direction = -1;
 
 	void OnEnable()
 	{
@@ -28,58 +27,41 @@ public class PlayerController : MonoBehaviour {
 		var x = Input.GetAxis("Horizontal") * Time.deltaTime * velocity;
 		var y = Input.GetAxis("Vertical") * Time.deltaTime * velocity;
 
-		if (y == 0 & x == 0) {
-			direction = "idle";
-			//No button is pressed
-		} else if (y > 0f & x > 0f) {
-			direction = "RightUp";
-			//Left and up is pressed
-		} else if (y < 0f & x > 0f) {
-			direction = "RightDown";
-			//Left and down is pressed
-		} else if (y > 0f & x < 0f) {
-			direction = "leftUp";
-			//Right and up is pressed
-		} else if (y < 0f & x < 0f) {
-			direction = "leftDown";
-			//Right and down is pressed
-		} else if (y == 0f & x < 0f) {
-			direction = "left";
-			//Only right is pressed
-		} else if (y == 0f & x > 0f) {
-			direction = "right";
-			//Only left is pressed
-		} else if (y > 0f & x == 0f) {
-			direction = "up";
-			//Only up is pressed
-		} else if  (y < 0f & x == 0f){
-			direction = "down";
-			//Only down is pressed
-		}
-		if(Input.GetKeyDown("space")){
-		}
+		if (y == 0 & x == 0)
+			direction = -1;			//No button is pressed
+		else if (y > 0 & x == 0)
+			direction = 0;			//Only up is pressed
+		else if (y > 0 & x > 0)
+			direction = 1;			//Right and up is pressed
+		else if (y == 0 & x > 0)
+			direction = 2;			//Only right is pressed
+		else if (y < 0 & x > 0)
+			direction = 3;			//Right and down is pressed
+		else if  (y < 0 & x == 0)
+			direction = 4;			//Only down is pressed
+		else if (y < 0 & x < 0)
+			direction = 5;			//Left and down is pressed
+		else if (y == 0 & x < 0)
+			direction = 6;			//Only left is pressed
+		else if (y > 0 & x < 0)
+			direction = 7;			//Left and up is pressed
+		if(Input.GetKeyDown("space"))
 			shoot();
-		if (Input.GetKey (KeyCode.W) && grounded == true) {
-			rigid.AddForce (Vector3.up * (jump * 10));
-			jumpEnable = false;
-			anim.SetInteger("moving", 0);
-		} else {
-		}
 		grounded = false;
-		int count = rigid.Cast (Vector2.down, hitBuffer, 0);
+		int count = rigid.Cast (Vector2.down, hitBuffer, 0.03125f);
 		hitBufferList.Clear ();
 		for (int i = 0; i < count; i++) {
-		}
 			hitBufferList.Add (hitBuffer [i]);
+		}
 		for (int i = 0; i < hitBufferList.Count; i++) {
-			Debug.Log (hitBufferList [i].distance == 0);
-			if(hitBufferList [i].distance == 0) grounded = true;
+			grounded = true;
+			transform.position = new Vector3 (transform.position.x, transform.position.y - hitBufferList[i].distance, 0);
 		}
 		print(direction);
 	}
 
 	void shoot(){
-		GameObject bullet = (GameObject)Instantiate(bulletPrefab, new Vector3(transform.position.x + gunOffset.x, transform.position.y + gunOffset.y, 0), Quaternion.identity );
+		GameObject bullet = (GameObject)Instantiate(bulletPrefab, new Vector3(transform.position.x + gunOffset[0].x, transform.position.y + gunOffset[0].y, 0), Quaternion.identity );
 		bullet.GetComponent<BulletController>().direction = 2;
 	}
 	void OnCollisionEnter2D(Collision2D col){
