@@ -27,22 +27,22 @@ public class PlayerController : MonoBehaviour {
 			direction = "idle";
 			//No button is pressed
 		} else if (y > 0f & x > 0f) {
-			direction = "leftUp";
+			direction = "RightUp";
 			//Left and up is pressed
 		} else if (y < 0f & x > 0f) {
-			direction = "leftDown";
+			direction = "RightDown";
 			//Left and down is pressed
 		} else if (y > 0f & x < 0f) {
-			direction = "rightUp";
+			direction = "leftUp";
 			//Right and up is pressed
 		} else if (y < 0f & x < 0f) {
-			direction = "rightDown";
+			direction = "leftDown";
 			//Right and down is pressed
 		} else if (y == 0f & x < 0f) {
-			direction = "right";
+			direction = "left";
 			//Only right is pressed
 		} else if (y == 0f & x > 0f) {
-			direction = "left";
+			direction = "right";
 			//Only left is pressed
 		} else if (y > 0f & x == 0f) {
 			direction = "up";
