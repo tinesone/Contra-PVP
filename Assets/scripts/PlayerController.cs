@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-	public float speed = 6.5f;
-	float velocity = speed;
+	public float velocity = 6.5f;
 
 	public GameObject bulletPrefab;
 	public List<Vector2> gunOffset = new List<Vector2>(8);
@@ -29,33 +28,24 @@ public class PlayerController : MonoBehaviour {
 
 		if (y == 0 & x == 0) {
 			direction = -1; 	//No button is pressed
-			velocity = 0;
 		} else if (y > 0 & x == 0) {
 			direction = 0;	 //Only up is pressed
-			velocity = speed;
 		} else if (y > 0 & x > 0) {
 			direction = 1;			//Right and up is pressed
-			velocity = speed;
 		} else if (y == 0 & x > 0) { 
 			direction = 2;			//Only right is pressed
-			velocity = speed;
 		} else if (y < 0 & x > 0) {
 			direction = 3;			//Right and down is pressed		
-			velocity = speed;
 		} else if (y < 0 & x == 0) {
 			direction = 4;			//Only down is pressed
-			velocity = speed;
 		} else if (y < 0 & x < 0) {
 			direction = 5;			//Left and down is pressed
-			velocity = speed;
 		} else if (y == 0 & x < 0) {
 			direction = 6;	 //Only left is pressed
-			velocity = speed;
 		} else if (y > 0 & x < 0) {
 			direction = 7;			//Left and up is pressed
-			velocity = speed;
 		}
-		transform.position += new Vector3(x, 0, 0);
+		transform.position += new Vector3(x/2, 0, 0);
 
 		if(Input.GetKeyDown("space"))
 			shoot();
