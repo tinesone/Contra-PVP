@@ -45,7 +45,12 @@ public class PlayerController : MonoBehaviour {
 		} else if (y > 0 & x < 0) {
 			direction = 7;			//Left and up is pressed
 		}
-		transform.position += new Vector3(x/2, 0, 0);
+
+		if (Input.GetKey (KeyCode.D)) {
+			transform.Translate(new Vector3(1, 0, 0) * velocity);
+		} else if (Input.GetKey(KeyCode.A)){
+			transform.Translate(new Vector3(-1, 0, 0) * velocity);
+		}
 
 		if(Input.GetKeyDown("space"))
 			shoot();
