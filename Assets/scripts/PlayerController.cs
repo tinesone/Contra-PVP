@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-	public float velocity = 6.5f;
+	public float speed = 0.1f;
 
 	public GameObject bulletPrefab;
 	public List<Vector2> gunOffset = new List<Vector2>(8);
@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		var x = Input.GetAxis ("Horizontal") * Time.deltaTime * velocity;
-		var y = Input.GetAxis ("Vertical") * Time.deltaTime * velocity;
+		var x = Input.GetAxis ("Horizontal") * Time.deltaTime * speed;
+		var y = Input.GetAxis ("Vertical") * Time.deltaTime * speed;
 
 		if (y == 0 & x == 0) {
 			direction = -1; 	//No button is pressed
@@ -47,9 +47,10 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		if (Input.GetKey (KeyCode.D)) {
-			transform.Translate(new Vector3(1, 0, 0) * velocity);
-		} else if (Input.GetKey(KeyCode.A)){
-			transform.Translate(new Vector3(-1, 0, 0) * velocity);
+			transform.Translate(new Vector3(1, 0, 0) * speed);
+		}
+		if (Input.GetKey(KeyCode.A)){
+			transform.Translate(new Vector3(-1, 0, 0) * speed);
 		}
 
 		if(Input.GetKeyDown("space"))
