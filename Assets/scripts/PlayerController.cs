@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		var x = Input.GetAxis ("Horizontal") * Time.deltaTime * speed;
-		var y = Input.GetAxis ("Vertical") * Time.deltaTime * speed;
+		var x = Input.GetAxisRaw ("Horizontal") * Time.deltaTime * speed;
+		var y = Input.GetAxisRaw ("Vertical") * Time.deltaTime * speed;
 
 		if (y == 0 & x == 0) {
 			direction = -1; 	//No button is pressed
@@ -45,13 +45,15 @@ public class PlayerController : MonoBehaviour {
 		} else if (y > 0 & x < 0) {
 			direction = 7;			//Left and up is pressed
 		}
+		transform.Translate(new Vector3(x * (speed * 10), 0, 0));
 
-		if (Input.GetKey (KeyCode.D)) {
+		/*if (Input.GetKey (KeyCode.D)) {
 			transform.Translate(new Vector3(1, 0, 0) * speed);
 		}
 		if (Input.GetKey(KeyCode.A)){
 			transform.Translate(new Vector3(-1, 0, 0) * speed);
 		}
+		*/
 
 		if(Input.GetKeyDown("space"))
 			shoot();
