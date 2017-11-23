@@ -47,13 +47,6 @@ public class PlayerController : MonoBehaviour {
 		}
 		transform.Translate(new Vector3(x * (speed * 10), 0, 0));
 
-		/*if (Input.GetKey (KeyCode.D)) {
-			transform.Translate(new Vector3(1, 0, 0) * speed);
-		}
-		if (Input.GetKey(KeyCode.A)){
-			transform.Translate(new Vector3(-1, 0, 0) * speed);
-		}
-		*/
 
 		if(Input.GetKeyDown("space"))
 			shoot();
