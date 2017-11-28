@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-	public float speed = 0.1f;
+
+	public float speed = 1.5f;
 
 	public GameObject bulletPrefab;
 	public List<Vector2> gunOffset = new List<Vector2>(8);
@@ -26,26 +27,33 @@ public class PlayerController : MonoBehaviour {
 		var x = Input.GetAxisRaw ("Horizontal") * Time.deltaTime * speed;
 		var y = Input.GetAxisRaw ("Vertical") * Time.deltaTime * speed;
 
-		if (y == 0 & x == 0) {
-			direction = -1; 	//No button is pressed
-		} else if (y > 0 & x == 0) {
-			direction = 0;	 //Only up is pressed
-		} else if (y > 0 & x > 0) {
-			direction = 1;			//Right and up is pressed
-		} else if (y == 0 & x > 0) { 
-			direction = 2;			//Only right is pressed
-		} else if (y < 0 & x > 0) {
-			direction = 3;			//Right and down is pressed		
-		} else if (y < 0 & x == 0) {
-			direction = 4;			//Only down is pressed
-		} else if (y < 0 & x < 0) {
-			direction = 5;			//Left and down is pressed
-		} else if (y == 0 & x < 0) {
-			direction = 6;	 //Only left is pressed
-		} else if (y > 0 & x < 0) {
-			direction = 7;			//Left and up is pressed
+		if (y == 0 & x == 0) 
+			direction = -1; 		 //No button is pressed
+		else if (y > 0 & x == 0)
+			direction = 0;	 		 //Only up is pressed
+		else if (y > 0 & x > 0){ 
+			direction = 1;			 //Right and up is pressed
+			transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+		}else if (y == 0 & x > 0){ 
+			direction = 2;			 //Only right is pressed
+			transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+		}else if (y < 0 & x > 0){ 
+			direction = 3;			 //Right and down is pressed		
+			transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+		}else if (y < 0 & x == 0) 
+			direction = 4;			 //Only down is pressed
+		else if (y < 0 & x < 0){ 
+			direction = 5;			 //Left and down is pressed
+			transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+		}else if (y == 0 & x < 0){ 
+			direction = 6;			 //Only left is pressed
+			transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+		}else if (y > 0 & x < 0){ 
+			direction = 7;			 //Left and up is pressed
+			transform.rotation = Quaternion.Euler(0f, 180f, 0f);
 		}
-		transform.Translate(new Vector3(x * (speed * 10), 0, 0));
+		anim.SetInteger ("moving", direction + 1);
+		transform.position = new Vector2 (transform.position.x + x * 10, transform.position.y );
 
 
 		if(Input.GetKeyDown("space"))
@@ -60,7 +68,6 @@ public class PlayerController : MonoBehaviour {
 			grounded = true;
 			transform.position = new Vector3 (transform.position.x, transform.position.y - hitBufferList[i].distance, 0);
 		}
-		print(direction);
 	}
 
 	void shoot(){

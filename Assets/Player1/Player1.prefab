@@ -117,8 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06715c2dd547d5544bd0e57ef520fdc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: 15
-  velocity: 6.5
+  speed: 1
   bulletPrefab: {fileID: 1935937670632816, guid: ce4d0dc25538c4e3c9f6edbe7a770dd1,
     type: 2}
   gunOffset:
