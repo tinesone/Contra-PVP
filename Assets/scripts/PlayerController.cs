@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
 
 	protected bool grounded;
 	protected bool jumping = false;
+	protected bool falling = false;
 	protected Animator anim;
 	protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
 	protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D> (16);
@@ -49,21 +50,30 @@ public class PlayerController : MonoBehaviour {
 			shoot();
 
 		//==========GRAVITY==========
-		for(int i = 0; i < gravity; i++) {
-			bool grounded = false;
-			float x = transform.position.x;
-			float y = transform.position.y;
-			Vector2 floor = new Vector2(x-x%1+0.5f, y - 1.03125f);  // Snap to grid formula: x-x%gridWidth+gridOffset
-			foreach (Transform child in transform.parent){
-				if((Vector2)child.position == floor){
-					grounded = true;
-					break;
+		if(!jumping || falling) {
+			for(int i = 0; i < gravity; i++) {
+				bool grounded = false;
+				float x = transform.position.x;
+				float y = transform.position.y;
+				Vector2 floor = new Vector2(x-x%1+0.5f, y - 1.03125f);  // Snap to grid formula: x-x%gridWidth+gridOffset
+				foreach (Transform child in transform.parent){
+					if((Vector2)child.position == floor){
+						grounded = true;
+						break;
+					}
 				}
-			}
-			if(!grounded) {
-				float newX = transform.position.x;
-				float newY = ((float)transform.position.y - 0.03125f)-((float)transform.position.y - 0.03125f)%0.03125f;
-				transform.position = new Vector2(newX, newY);
+				if(!grounded) {
+					if(!falling)
+						falling = true;
+					float newX = transform.position.x;
+					float newY = ((float)transform.position.y - 0.03125f)-((float)transform.position.y - 0.03125f)%0.03125f;
+					transform.position = new Vector2(newX, newY);
+				} else {
+					if(falling)
+						falling = false;
+					if(jumping)
+						jumping = false;
+				}
 			}
 		}
 		//==========GRAVITY==========
