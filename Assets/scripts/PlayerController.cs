@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 	public float speed = 6.5f;
-	float velocity = speed;
-
+	public int gravity = 6;
 	public GameObject bulletPrefab;
 	public List<Vector2> gunOffset = new List<Vector2>(8);
 
 	protected bool grounded;
-	protected Rigidbody2D rigid;
+	protected bool jumping = false;
 	protected Animator anim;
 	protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
 	protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D> (16);
@@ -18,58 +17,57 @@ public class PlayerController : MonoBehaviour {
 
 	void OnEnable()
 	{
-		rigid = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		var x = Input.GetAxis ("Horizontal") * Time.deltaTime * velocity;
-		var y = Input.GetAxis ("Vertical") * Time.deltaTime * velocity;
+		Vector2 input = new Vector2(Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 
-		if (y == 0 & x == 0) {
-			direction = -1; 	//No button is pressed
-			velocity = 0;
-		} else if (y > 0 & x == 0) {
-			direction = 0;	 //Only up is pressed
-			velocity = speed;
-		} else if (y > 0 & x > 0) {
-			direction = 1;			//Right and up is pressed
-			velocity = speed;
-		} else if (y == 0 & x > 0) { 
-			direction = 2;			//Only right is pressed
-			velocity = speed;
-		} else if (y < 0 & x > 0) {
-			direction = 3;			//Right and down is pressed		
-			velocity = speed;
-		} else if (y < 0 & x == 0) {
-			direction = 4;			//Only down is pressed
-			velocity = speed;
-		} else if (y < 0 & x < 0) {
-			direction = 5;			//Left and down is pressed
-			velocity = speed;
-		} else if (y == 0 & x < 0) {
-			direction = 6;	 //Only left is pressed
-			velocity = speed;
-		} else if (y > 0 & x < 0) {
-			direction = 7;			//Left and up is pressed
-			velocity = speed;
+		if (input.y == 0 & input.x == 0) {
+			direction = -1;				//No button is pressed
+		} else if (input.y > 0 & input.x == 0) {
+			direction = 0;				//Only up is pressed
+		} else if (input.y > 0 & input.x > 0) {
+			direction = 1;				//Right and up is pressed
+		} else if (input.y == 0 & input.x > 0) {
+			direction = 2;				//Only right is pressed
+		} else if (input.y < 0 & input.x > 0) {
+			direction = 3;				//Right and down is pressed
+		} else if (input.y < 0 & input.x == 0) {
+			direction = 4;				//Only down is pressed
+		} else if (input.y < 0 & input.x < 0) {
+			direction = 5;				//Left and down is pressed
+		} else if (input.y == 0 & input.x < 0) {
+			direction = 6;				//Only left is pressed
+		} else if (input.y > 0 & input.x < 0) {
+			direction = 7;				//Left and up is pressed
 		}
-		transform.position += new Vector3(x, 0, 0);
+		transform.position += new Vector3(input.x*0.3125f * speed/10, 0, 0);
 
 		if(Input.GetKeyDown("space"))
 			shoot();
-		grounded = false;
-		int count = rigid.Cast (Vector2.down, hitBuffer, 0.03125f);
-		hitBufferList.Clear ();
-		for (int i = 0; i < count; i++) {
-			hitBufferList.Add (hitBuffer [i]);
+
+		//==========GRAVITY==========
+		for(int i = 0; i < gravity; i++) {
+			bool grounded = false;
+			float x = transform.position.x;
+			float y = transform.position.y;
+			Vector2 floor = new Vector2(x-x%1+0.5f, y - 1.03125f);  // Snap to grid formula: x-x%gridWidth+gridOffset
+			foreach (Transform child in transform.parent){
+				if((Vector2)child.position == floor){
+					grounded = true;
+					break;
+				}
+			}
+			if(!grounded) {
+				float newX = transform.position.x;
+				float newY = ((float)transform.position.y - 0.03125f)-((float)transform.position.y - 0.03125f)%0.03125f;
+				transform.position = new Vector2(newX, newY);
+			}
 		}
-		for (int i = 0; i < hitBufferList.Count; i++) {
-			grounded = true;
-			transform.position = new Vector3 (transform.position.x, transform.position.y - hitBufferList[i].distance, 0);
-		}
-		print(direction);
+		//==========GRAVITY==========
+		//print(direction);
 	}
 
 	void shoot(){
